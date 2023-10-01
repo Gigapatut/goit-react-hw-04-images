@@ -1,38 +1,31 @@
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 import css from './Searchbar.module.css';
 import { FaSearch } from 'react-icons/fa';
 
 const { Component } = require('react');
 
-class Searchbar extends Component {
-  state = {
-    searchQuery: '',
-  };
+const Searchbar = ({onSubmit}) => {
+  const [searchQuery, setSearchQuery] = useState('');
+  
+  const handleChange = evt => {
+    setSearchQuery(evt.target.value);
+};
 
-  handleChange = evt => {
-    const { value } = evt.target;
-    this.setState({ searchQuery: value });
-  };
-  handleSubmit = evt => {
+const handleSubmit = evt => {
     evt.preventDefault();
-    if (this.state.searchQuery.trim() === '') {
+    if (searchQuery.trim() === '') {
       toast.error('Please enter a search topic !');
       return;
     }
+    onSubmit(searchQuery);
+    setSearchQuery('');
+};
 
-    this.props.onSubmit(this.state.searchQuery);
-    this.reset();
-  };
-
-  reset = () => {
-    this.setState({ searchQuery: '' });
-  };
-
-  render() {
     return (
       <>
         <div className={css.header }>
-          <form className={css.form} onSubmit={this.handleSubmit}>
+          <form className={css.form} onSubmit={handleSubmit}>
             <button className={css.formButton }  type="submit">
               <FaSearch size={22} />
               <span className={css.buttonLabel} >Search</span>
@@ -44,13 +37,13 @@ class Searchbar extends Component {
               autoComplete="off"
               autoFocus={true}
               placeholder="Search images and photos"
-              value={this.state.searchQuery}
-              onChange={this.handleChange}
+              value={searchQuery}
+              onChange={handleChange}
             />
           </form>
         </div>
       </>
     );
   }
-}
+
 export default Searchbar;

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/Modal/Modal';
-// import { GalleryItem, GalleryImage } from './ImageGalleryItem.styled';
 import css from './ImageGalleryItem.module.css';
 
 export default class ImageGalleryItem extends Component {
